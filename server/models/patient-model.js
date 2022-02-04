@@ -3,14 +3,7 @@ const Schema = mongoose.Schema;
 
 const Item = new Schema(
     {
-        name: {
-            type: String,
-            required: true
-        },
-        patientId: {
-            type: String,
-            required: true
-        },
+        patientId: new Schema.Types.ObjectID,
         age: {
             type: Number,
             required: true
