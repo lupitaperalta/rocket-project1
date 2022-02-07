@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 // GET request to get all items
 router.get('/admin', exam_controller.getItems);
 
-// GET request to 
+
 
 
 
