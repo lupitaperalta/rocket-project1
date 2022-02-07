@@ -1,5 +1,5 @@
 /* eslint-disable no-undef, arrow-body-style */
-const Item = require('../models/item-model');
+const Item = require('../models/exam-model');
 
 getItems = async (req, res) => {
   await Item.find({}, (err, items) => {
