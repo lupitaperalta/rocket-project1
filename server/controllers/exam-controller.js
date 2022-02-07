@@ -1,4 +1,5 @@
 /* eslint-disable no-undef, arrow-body-style */
+// Controller we will use for the exams
 const Item = require('../models/exam-model');
 
 getItems = async (req, res) => {
