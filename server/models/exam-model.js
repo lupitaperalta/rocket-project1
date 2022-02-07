@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Exam = new Schema(
+const Item = new Schema(
     {
         exam_id: new Schema.Types.ObjectId,
         patient_id: new Schema.Types.ObjectId,
@@ -21,5 +21,5 @@ const Exam = new Schema(
     { timestamps: true },
 );
 
-module.exports = mongoose.model('exam', Exam);
+module.exports = mongoose.model('item', Item);
 
