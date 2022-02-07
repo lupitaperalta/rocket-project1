@@ -15,12 +15,12 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-//Importing routes--> our different pages
+//Importing routes--> our different pages.
 const examsRoute = require('./routes/exams');
 const adminRoute = require('./routes/admin');
 const patientRoute = require('./routes/patient');
 
-//Middleware to use routes
+//Middleware to use routes.
 app.use('/exams', examsRoute);
 app.use('/admin', adminRoute);
 app.use('/patient', patientRoute);
