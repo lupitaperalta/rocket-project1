@@ -1,4 +1,5 @@
 /* eslint-disable no-undef, arrow-body-style */
+// Controller for patient page
 const Item = require('../models/patient-model');
 
 getItems = async (req, res) => {
