@@ -12,6 +12,8 @@ router.get('/', (req, res) => {
 // GET request to list all exams
 router.get('/exams', exam_controller.getItems);
 
+//More to be added?
+
 
 
 
