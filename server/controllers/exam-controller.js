@@ -128,11 +128,11 @@ updateItem = async (req, res) => {
 
   const itemForUpdate = {
     _id: req.params.id,
-    name: body.name,
-    daysOfWeek: body.daysOfWeek,
-    timeframeNote: body.timeframeNote,
-    priority: body.priority,
-    content: body.content,
+    exam_id: body.exam_id,
+    patient_id: body.patient_id,
+    image: body.image,
+    key_findings: body.key_findings,
+    brexia_score: body.brexia_score,
   };
 
   // console.log('----------------------- updateItem: res -----------------------');
