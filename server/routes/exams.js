@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 // GET request to list all exams
-router.get('/exams', exam_controller.getItems);
+router.get('/exams/:id', exam_controller.getItemById);
 
 
 
