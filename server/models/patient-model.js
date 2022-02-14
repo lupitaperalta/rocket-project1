@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Item = new Schema(
+const Patient = new Schema(
     {
         patientId: new Schema.Types.ObjectID,
         age: {
@@ -36,4 +36,4 @@ const Item = new Schema(
     { timestamps: true },
 );
 
-module.exports = mongoose.model('item', Item);
+module.exports = mongoose.model('patients', Patient);

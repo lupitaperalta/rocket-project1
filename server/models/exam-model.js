@@ -21,4 +21,4 @@ const Exam = new Schema(
     { timestamps: true },
 );
 
-module.exports = mongoose.model('exam', Exam);
+module.exports = mongoose.model('exams', Exam);
