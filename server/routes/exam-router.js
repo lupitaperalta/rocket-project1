@@ -4,10 +4,10 @@ const ItemController = require('../controllers/exam-controller');
 
 const router = express.Router();
 
+// This route is /exams and will get all exams from the exams db
 router.get('/', ItemController.getItems);
+
+// /exams/:id will get the specific exam from its id in the exams db
 router.get('/:id', ItemController.getItemById);
-router.post('/create', ItemController.createItem);
-router.put('/exam/:id', ItemController.updateItem);
-router.delete('/admin/:id', ItemController.deleteItem);
 
 module.exports = router;

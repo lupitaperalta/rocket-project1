@@ -5,8 +5,9 @@ const cors = require('cors');
 
 const db = require('./db');
 
-//Our routers for exams and patients 
+//Our routers for exams and patients. 
 const itemRouter = require('./routes/item-router');
+const adminRouter = require('./routes/admin-router');
 const examRouter = require('./routes/exam-router');
 const patientRouter = require('./routes/patient-router');
 
@@ -19,9 +20,9 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-//Middleware to use routes
+//Middleware to use routes. To see full routes, reference comments in the relevant router files.
 app.use('/exams', examRouter);
-app.use('/admin', adminRoute);
+app.use('/admin', adminRouter);
 app.use('/patient', patientRouter);
 
 //The first page you see when launching for the first time(backend app)
