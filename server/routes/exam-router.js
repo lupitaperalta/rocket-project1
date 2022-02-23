@@ -4,9 +4,9 @@ const ItemController = require('../controllers/exam-controller');
 
 const router = express.Router();
 
-router.get('/exams', ItemController.getItems);
-router.get('/exams/:id', ItemController.getItemById);
-router.post('/exams/create', ItemController.createItem);
+router.get('/', ItemController.getItems);
+router.get('/:id', ItemController.getItemById);
+router.post('/create', ItemController.createItem);
 router.put('/exam/:id', ItemController.updateItem);
 router.delete('/admin/:id', ItemController.deleteItem);
 
