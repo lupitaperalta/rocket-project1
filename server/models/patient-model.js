@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const Patient = new Schema(
     {
-        patientId: new Schema.Types.ObjectID,
+        patientId: {
+            type: String,
+            required: true
+        },
         age: {
             type: Number,
             required: true
