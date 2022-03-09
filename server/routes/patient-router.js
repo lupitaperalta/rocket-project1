@@ -1,11 +1,13 @@
 const express = require('express');
 
-const ItemController = require('../controllers/patient-controller');
+const PatientController = require('../controllers/patient-controller');
 
 const router = express.Router();
 
-// This route is /patient/:id and will retrieve the patient entry in the patients db
-router.get('/:id', ItemController.getItemById);
-
+router.get('/patients', PatientController.getPatients);
+router.get('/patient/:id', PatientController.getPatientById);
+router.post('/patient', PatientController.createPatient);
+router.put('/patient/:id', PatientController.updatePatient);
+router.delete('/patient/:id', PatientController.deletePatient);
 
 module.exports = router;
