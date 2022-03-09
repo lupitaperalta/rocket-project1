@@ -23,7 +23,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 //Middleware to use routes. To see full routes, reference comments in the relevant router files.
 app.use('/exams', examRouter);
 app.use('/admin', adminRouter);
-app.use('/patient', patientRouter);
+app.use('/patients', patientRouter);
 
 //The first page you see when launching for the first time(backend app)
 app.get('/', (req, res) => {
