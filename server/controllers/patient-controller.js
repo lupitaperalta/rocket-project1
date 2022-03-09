@@ -1,30 +1,29 @@
 /* eslint-disable no-undef, arrow-body-style */
-// Controller for patient page
-const Item = require('../models/patient-model');
+const Patient = require('../models/patient-model');
 
-getItems = async (req, res) => {
-  await Item.find({}, (err, items) => {
+getPatients = async (req, res) => {
+  await Patient.find({}, (err, patients) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItems': ${err}`);
+      console.error(`[Hack.Diversity React Template] - 400 in 'getPatients': ${err}`);
       return res.status(400).json({
         success: false,
         error: err,
       });
     }
-    if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItems': Items not found`);
+    if (!patients.length) {
+      console.error(`[Hack.Diversity React Template] - 404 in 'getPatients': Patient not found`);
       return res.status(200).json({
         success: true,
-        items: [],
+        patients: [],
       });
     }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItems': Items fetched!`);
+    console.log(`[Hack.Diversity React Template] - 200 in 'getPatients': Patients fetched!`);
     return res.status(200).json({
       success: true,
-      items: items,
+      patients: patients,
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItems': ${err}`);
+    console.error(`[Hack.Diversity React Template] - caught error in 'getPatients': ${err}`);
     console.error(err);
     return res.status(404).json({
       success: false,
@@ -33,35 +32,35 @@ getItems = async (req, res) => {
   });
 };
 
-getItemById = async (req, res) => {
-  await Item.find({ _id: req.params.id }, (err, items) => {
+getPatientById = async (req, res) => {
+  await Patient.find({ _id: req.params.id }, (err, patient) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItemById': ${err}`);
+      console.error(`[Hack.Diversity React Template] - 400 in 'getPatientById': ${err}`);
       throw res.status(400).json({
         success: false,
         error: err,
       });
     }
-    if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItemById': Item not found`);
+    if (!patients.length) {
+      console.error(`[Hack.Diversity React Template] - 404 in 'getPatientById': Patient not found`);
       return res.status(404).json({
         success: false,
-        error: 'Item not found',
+        error: 'Patient not found',
       });
     }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItemById': Item fetched!`);
+    console.log(`[Hack.Diversity React Template] - 200 in 'getPatientById': Patient fetched!`);
     return res.status(200).json({
       success: true,
-      item: items[0],
+      patient: patients[0],
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItemById': ${err}`);
+    console.error(`[Hack.Diversity React Template] - caught error in 'getPatientById': ${err}`);
     console.error(err);
     return err;
   });
 };
 
-createItem = (req, res) => {
+createPatient= (req, res) => {
   const body = req.body;
   // console.log('----------------------- createItem: req -----------------------')
   // console.log(req);
@@ -71,35 +70,35 @@ createItem = (req, res) => {
   if (!body) {
     return res.status(400).json({
       success: false,
-      error: 'You must provide an item.',
+      error: 'You must provide a patient.',
     });
   }
 
-  const item = new Item(body);
+  const patient = new Patient(body);
 
-  if (!item) {
-    console.error(`[Hack.Diversity React Template] - 400 in 'createItem': 'item' is malformed.`);
+  if (!patient) {
+    console.error(`[Hack.Diversity React Template] - 400 in 'createPatient': 'patient' is malformed.`);
     return res.status(400).json({
       success: false,
-      message: "'item' is malformed",
+      message: "'patient' is malformed",
     });
   }
 
   // console.log('----------------------- createItem: item -----------------------')
   // console.log(item);
 
-  return item
+  return patient
     .save()
     .then(() => {
-      console.error(`[Hack.Diversity React Template] - 201 in 'createItem': Item created!`);
+      console.error(`[Hack.Diversity React Template] - 201 in 'createPatient': Patient created!`);
       return res.status(201).json({
         success: true,
-        id: item._id,
-        message: 'Item created!',
+        id: patient._id,
+        message: 'Patient created!',
       });
     })
     .catch(err => {
-      console.error(`[Hack.Diversity React Template] - caught error in 'createItem'`);
+      console.error(`[Hack.Diversity React Template] - caught error in 'createPatient'`);
       Object.keys(err.errors).forEach(errorKey => {
         console.error(`[Hack.Diversity React Template] ERROR for: ${errorKey}`);
         console.error(
@@ -116,35 +115,32 @@ createItem = (req, res) => {
     });
 };
 
-updateItem = async (req, res) => {
+updatePatient = async (req, res) => {
   const body = req.body;
   if (!body) {
-    console.error(`[Hack.Diversity React Template] - 400 in 'updateItem': You must provide an item to update.`);
+    console.error(`[Hack.Diversity React Template] - 400 in 'updatePatient': You must provide a patient to update.`);
     return res.status(400).json({
       success: false,
-      error: 'You must provide an item to update.',
+      error: 'You must provide a patient to update.',
     });
   }
 
-  const itemForUpdate = {
+  const patientForUpdate = {
     _id: req.params.id,
     patientId: body.patientId,
     age: body.age,
     sex: body.sex,
     race: body.race,
     zip: body.zip,
-    latestBMI: body.latestBMI,
-    latestWeight: body.latestWeight,
-    latestHeight: body.latestHeight,
   };
 
   // console.log('----------------------- updateItem: res -----------------------');
   // console.log(res);
 
   try {
-    await Item.findOneAndUpdate({ _id: req.params.id }, itemForUpdate);
+    await Patient.findOneAndUpdate({ _id: req.params.id }, patientForUpdate);
   } catch (err) {
-    console.error(`[Hack.Diversity React Template] - caught error in 'updateItem': ${err}`);
+    console.error(`[Hack.Diversity React Template] - caught error in 'updatePatient': ${err}`);
     console.error(err);
     return res.status(400).json({
       success: false,
@@ -152,47 +148,47 @@ updateItem = async (req, res) => {
     });
   }
 
-  console.log(`[Hack.Diversity React Template] - 200 in 'updateItem': Item updated!`);
+  console.log(`[Hack.Diversity React Template] - 200 in 'updatePatient': Patient updated!`);
   return res.status(200).json({
     success: true,
     id: req.params.id,
-    message: 'Item updated!',
+    message: 'Patient updated!',
   });
 };
 
-deleteItem = async (req, res) => {
-  await Item.findOneAndDelete({ _id: req.params.id }, (err, item) => {
+deletePatient = async (req, res) => {
+  await Patient.findOneAndDelete({ _id: req.params.id }, (err, patient) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': ${err}`);
+      console.error(`[Hack.Diversity React Template] - 400 in 'deletePatient': ${err}`);
       return res.status(400).json({
         succes: false,
         error: err,
       });
     }
 
-    if (!item) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': Item not found!`);
+    if (!patient) {
+      console.error(`[Hack.Diversity React Template] - 400 in 'deletePatient': Patient not found!`);
       return res.status(400).json({
         success: false,
-        error: 'Item not found!',
+        error: 'Patient not found!',
       });
     }
 
     return res.status(200).json({
       success: true,
-      item: item,
+      patient: patient,
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'deleteItem': ${err}`);
+    console.error(`[Hack.Diversity React Template] - caught error in 'deletePatient': ${err}`);
     console.error(err);
     return err;
   });
 };
 
 module.exports = {
-  getItems,
-  getItemById,
-  createItem,
-  updateItem,
-  deleteItem,
+  getPatients,
+  getPatientById,
+  createPatient,
+  updatePatient,
+  deletePatient,
 };
