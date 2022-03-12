@@ -32,6 +32,16 @@ const navBarItems = [
     toPathname: '/item/create',
     className: 'nav-link',
   },
+  {
+    name: 'Create Patient',
+    toPathname: '/patient',
+    className: 'nav-link',
+  },
+  {
+    name: 'Patients List',
+    toPathname: '/patients',
+    className: 'nav-link',
+  }
 ];
 
 class NavBar extends Component {
