@@ -13,7 +13,10 @@ import './styles/App.css';
 import { NavBar, Welcome } from './components';
 
 // Pages
-import { ItemInsert, Items, ItemUpdate } from './pages';
+import { ItemInsert, Items, ItemUpdate} from './pages';
+
+import CreatePatient from './components/create-patient.component';
+import PatientsList from './components/patients-list.component';
 
 class App extends Component {
   render() {
@@ -29,6 +32,8 @@ class App extends Component {
         <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
         <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
+        <Route path= '/patient' component={CreatePatient} />
+        <Route path= '/patients' component={PatientsList} />
       </Switch>
     );
 
@@ -38,6 +43,7 @@ class App extends Component {
         <NavBar />
         <div className="app--main">
           <div className="view-container">{publicViews}</div>
+
         </div>
       </BrowserRouter>
     );
