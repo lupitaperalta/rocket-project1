@@ -76,7 +76,7 @@ class ExamsList extends Component {
   fetchAllExams = () => {
     //api
       //.getAllPatients()
-    axios.get('http://localhost:3000/exams/exams')
+    axios.get('http://localhost:3000/exams/')
       .then(resp => {
         const { exams } = resp.data;
         console.log('getAllExams: resp');
@@ -109,7 +109,7 @@ class ExamsList extends Component {
     const itemId = data;
 
     //this.deleteSinglePatient(itemId)
-    axios.delete(`http://localhost:3000/exams/exam/${itemId}`)
+    axios.delete(`http://localhost:3000/exams/${itemId}`)
     .then(resp => {
         console.log('handleRemoveExam: resp');
         console.log(resp);
