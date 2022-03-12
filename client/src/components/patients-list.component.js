@@ -76,7 +76,7 @@ class PatientsList extends Component {
   fetchAllPatients = () => {
     //api
       //.getAllPatients()
-    axios.get('http://localhost:3000/patients/patients')
+    axios.get('http://localhost:3000/patients/patient')
       .then(resp => {
         const { patients } = resp.data;
         console.log('getAllPatients: resp');
