@@ -41,6 +41,16 @@ const navBarItems = [
     name: 'Patients List',
     toPathname: '/patients',
     className: 'nav-link',
+  },
+  {
+    name: 'Create Exam',
+    toPathname: '/exam',
+    className: 'nav-link',
+  },
+  {
+    name: 'Exams List',
+    toPathname: '/exams',
+    className: 'nav-link',
   }
 ];
 
