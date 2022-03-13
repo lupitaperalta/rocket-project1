@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import 'react-table-6/react-table.css';
 
+
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
@@ -102,7 +103,14 @@ class ItemsList extends Component {
         Header: 'Image',
         accessor: 'image',
         Cell: props => {
-          return <span data-image={props.original.image}>{props.value || '-'}</span>;
+          return(
+            
+            <img
+            style={{ height: '80px', width: '80px' }}
+            src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}            
+          /> 
+          )
+          //return <span data-image={props.original.image}>{props.value || '-'}</span>;
         },
       },
       {

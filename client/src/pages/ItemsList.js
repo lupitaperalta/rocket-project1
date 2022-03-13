@@ -152,7 +152,14 @@ class ItemsTable extends Component {
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-image={original.image}>{props.value}</span>;
+          return(
+          <img
+          style={{ height: '80px', width: '80px' }}
+          src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}
+          
+        /> 
+        )
+        //return <span data-image={original.image}>{props.value}</span>;
         },
       },
       {
