@@ -65,7 +65,6 @@ const Button = styled.button.attrs({
   margin: 15px 15px 15px 5px;
 `;
 
-// if you majorly fuck up all of the item pages in pages are the originals
 const CancelButton = styled.a.attrs({
   className: 'btn btn-danger',
 })`
@@ -76,36 +75,47 @@ class ItemInsert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      examName: '',
-      patientName: '',
-      image: '',
-      keyFindings: '',
-      brixiaScore: '',
+      name: '',
+      daysOfWeek: {},
+      timeframeNote: '',
+      priority: 0,
+      content: '',
     };
   }
 
-  handleChangeInputExamName = async event => {
-    const examName = event.target.value;
-    this.setState({ examName });
-  };
-  handleChangeInputPatientName = async event => {
-    const patientName = event.target.value;
-    this.setState({ patientName });
-  };
-  handleChangeInputImage = async event => {
-    const image = event.target.value;
-    this.setState({ image });
-  };
-  handleChangeInputKeyFindings = async event => {
-    const keyFindings = event.target.value;
-    this.setState({ keyFindings });
-  };
-  handleChangeInputBrixiaScore = async event => {
-    const brixiaScore = event.target.validity.valid ? event.target.value : this.state.brixiaScore;
-
-    this.setState({ brixiaScore });
+  handleChangeInputName = async event => {
+    const name = event.target.value;
+    this.setState({ name });
   };
 
+  handleChangeDays = async event => {
+    const { checked, value } = event.target;
+    const { daysOfWeek } = this.state;
+    const { DAYS_OF_WEEK } = shared;
+
+    if (checked && !daysOfWeek[value]) {
+      daysOfWeek[value] = DAYS_OF_WEEK[value];
+    } else if (!checked && daysOfWeek[value]) {
+      delete daysOfWeek[value];
+    }
+    this.setState({ daysOfWeek });
+  };
+
+  handleChangeInputTimeframe = async event => {
+    const timeframeNote = event.target.value;
+    this.setState({ timeframeNote });
+  };
+
+  handleChangeInputPriority = async event => {
+    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
+
+    this.setState({ priority });
+  };
+
+  handleChangeInputContent = async event => {
+    const content = event.target.value;
+    this.setState({ content });
+  };
 
   insertSingleItem = item => {
     return api
@@ -129,8 +139,8 @@ class ItemInsert extends Component {
   handleInsertItem = event => {
     event.preventDefault();
 
-    const { examName, patientName, image, keyFindings, brixiaScore } = this.state;
-    const item = { examName, patientName, image, keyFindings, brixiaScore };
+    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
+    const item = { name, daysOfWeek, timeframeNote, priority, content };
 
     this.insertSingleItem(item)
       .then(resp => {
@@ -139,11 +149,11 @@ class ItemInsert extends Component {
         if (typeof resp === 'object' && resp.status < 300 && resp.status >= 200) {
           window.alert('Item inserted successfully');
           this.setState({
-            examName: '',
-            patientName: '',
-            image: '',
-            keyFindings: '',
-            brixiaScore: 0,
+            name: '',
+            daysOfWeek: {},
+            timeframeNote: '',
+            priority: 0,
+            content: '',
           });
         } else {
           throw resp;
@@ -158,26 +168,39 @@ class ItemInsert extends Component {
   };
 
   render() {
-    const { examName, patientName, image, keyFindings, brixiaScore } = this.state;
+    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
 
+    const { DAYS_OF_WEEK } = shared;
 
     return (
       <Wrapper>
         <Title>Create Item</Title>
 
-        <Label>Exam ID: </Label>
-        <InputText type="text" value={examName} onChange={this.handleChangeInputExamName} />
+        <Label>Name: </Label>
+        <InputText type="text" value={name} onChange={this.handleChangeInputName} />
 
-        <Label>Patient ID: </Label>
-        <InputText type="text" value={patientName} onChange={this.handleChangeInputPatientName} />
+        <Fieldset>
+          <legend>Day(s) of the Week: </legend>
+          {Object.keys(DAYS_OF_WEEK).map((day, i) => (
+            <React.Fragment key={day}>
+              <Label htmlFor={day}>
+                <DayInput
+                  type="checkbox"
+                  id={day}
+                  value={day}
+                  onChange={this.handleChangeDays}
+                  checked={typeof daysOfWeek[day] === 'string'}
+                />
+                {DAYS_OF_WEEK[day]}
+              </Label>
+            </React.Fragment>
+          ))}
+        </Fieldset>
 
-        <Label>Image: </Label>
-        <InputText type="text" value={image} onChange={this.handleChangeInputImage} />
+        <Label>Timeframe Note: </Label>
+        <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
 
-        <Label>Key Findings: </Label>
-        <InputText type="text" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
-
-        <Label>Brixia Score: </Label>
+        <Label>Priority: </Label>
         <InputText
           type="number"
           step="0.1"
@@ -185,9 +208,12 @@ class ItemInsert extends Component {
           min="0"
           max="1000"
           pattern="[0-9]+([,\.][0-9]+)?"
-          value={brixiaScore}
-          onChange={this.handleChangeInputBrixiaScore}
+          value={priority}
+          onChange={this.handleChangeInputPriority}
         />
+
+        <Label>Content: </Label>
+        <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
 
         <Button onClick={this.handleInsertItem}>Add Item</Button>
         <CancelButton href={'/items'}>Cancel</CancelButton>

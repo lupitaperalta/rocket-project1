@@ -129,55 +129,51 @@ class ItemsTable extends Component {
         },
       },
       {
-        Header: 'Exam ID',
-        accessor: 'examName',
+        Header: 'Name',
+        accessor: 'name',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-examName={original.examName}>{props.value}</span>;
+          return <span data-name={original.name}>{props.value}</span>;
         },
       },
       {
-        Header: 'Patient ID',
-        accessor: 'patientName',
+        Header: 'Day(s)',
+        accessor: 'daysOfWeek',
         // filterable: true,
         Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-patientName={original.patientName}>{props.value}</span>;
+          const { daysOfWeek } = props.cell.row.original;
+          let daysToDisplay = '';
+          if (daysOfWeek && typeof daysOfWeek === 'object') {
+            for (const day in daysOfWeek) {
+              daysToDisplay =
+                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
+            }
+          }
+          return (
+            <span
+              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
+              data-daysofweek-by-id={props.value}>
+              {daysToDisplay || '-'}
+            </span>
+          );
         },
       },
       {
-        Header: 'Image',
-        accessor: 'image',
-        // filterable: true,
+        Header: 'Timeframe',
+        accessor: 'timeframeNote',
         Cell: props => {
           const { original } = props.cell.row;
-          return(
-          <img
-          style={{ height: '80px', width: '80px' }}
-          src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}
-          
-        /> 
-        )
-        //return <span data-image={original.image}>{props.value}</span>;
+          return <span data-timeframe={original.timeframeNote}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Key Findings',
-        accessor: 'keyFindings',
+        Header: 'Priority',
+        accessor: 'priority',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-keyFindings={original.keyFindings}>{props.value}</span>;
-        },
-      },
-      {
-        Header: 'Brixia Score',
-        accessor: 'brixiaScore',
-        // filterable: true,
-        Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-brixiaScore={original.brixiaScore}>{props.value}</span>;
+          return <span data-priority={original.priority}>{props.value}</span>;
         },
       },
       {
