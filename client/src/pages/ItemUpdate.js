@@ -60,11 +60,11 @@ class ItemUpdate extends Component {
     super(props);
     this.state = {
       _id: '',
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      examName: '',
+      patientName: '',
+      image: '',
+      keyFindings: '',
+      brixiaScore: 0,
     };
   }
 
@@ -91,23 +91,9 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
-  };
-
-  handleChangeDays = async event => {
-    const { checked } = event.target;
-    const { dayIndex } = event.target.dataset;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
-
-    if (checked && !daysOfWeek[dayIndex]) {
-      daysOfWeek[dayIndex] = DAYS_OF_WEEK[dayIndex];
-    } else if (!checked && daysOfWeek[dayIndex]) {
-      delete daysOfWeek[dayIndex];
-    }
-    this.setState({ daysOfWeek: daysOfWeek });
+  handleChangeInputExamName = async event => {
+    const examName = event.target.value;
+    this.setState({ examName });
   };
 
   updateSingleItem = item => {
@@ -129,25 +115,29 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
+  handleChangeInputPatientName = async event => {
+    const patientName = event.target.value;
+    this.setState({ patientName });
+  };
+  handleChangeInputImage = async event => {
+    const image = event.target.value;
+    this.setState({ image });
+  };
+  handleChangeInputKeyFindings = async event => {
+    const keyFindings = event.target.value;
+    this.setState({ keyFindings });
   };
 
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
+  handleChangeInputBrixiaScore = async event => {
+    const brixiaScore = event.target.validity.valid ? event.target.value : this.state.brixiaScore;
 
-    this.setState({ priority });
+    this.setState({ brixiaScore });
   };
 
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
-  };
 
   handleUpdateItem = event => {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { _id, name, daysOfWeek, timeframeNote, priority, content };
+    const { _id, examName, patientName, image, keyFindings, brixiaScore } = this.state;
+    const item = { _id, examName, patientName, image, keyFindings, brixiaScore };
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -174,40 +164,28 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
+    const { _id, examName, patientName, image, keyFindings, brixiaScore } = this.state;
 
-    const { DAYS_OF_WEEK } = shared;
 
     return (
       _id && (
         <Wrapper>
           <Title>Create Item</Title>
 
-          <Label>Name: </Label>
-          <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+          <Label>Exam ID: </Label>
+          <InputText type="text" value={examName} onChange={this.handleChangeInputExamName} />
 
-          <Fieldset>
-            <legend>Day(s) of the Week: </legend>
-            {Object.keys(DAYS_OF_WEEK).map((dayInt, i) => (
-              <React.Fragment key={DAYS_OF_WEEK[dayInt]}>
-                <DayInput
-                  type="checkbox"
-                  id={DAYS_OF_WEEK[dayInt]}
-                  className="day-checkbox-input"
-                  defaultValue={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                  data-day-index={dayInt}
-                  onChange={this.handleChangeDays}
-                  defaultChecked={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                />
-                <Label htmlFor={DAYS_OF_WEEK[dayInt]}>{DAYS_OF_WEEK[dayInt]}</Label>
-              </React.Fragment>
-            ))}
-          </Fieldset>
+          <Label>Patient ID: </Label>
+          <InputText type="text" value={patientName} onChange={this.handleChangeInputPatientName} />
 
-          <Label>Timeframe Note: </Label>
-          <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+          <Label>Image: </Label>
+          <InputText type="text" value={image} onChange={this.handleChangeInputImage} />
 
-          <Label>Priority: </Label>
+
+          <Label>Key Findings: </Label>
+          <InputText type="textarea" value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
+
+          <Label>Brixia Score: </Label>
           <InputText
             type="number"
             step="0.1"
@@ -215,12 +193,9 @@ class ItemUpdate extends Component {
             min="0"
             max="1000"
             pattern="[0-9]+([,\.][0-9]+)?"
-            value={priority}
-            onChange={this.handleChangeInputPriority}
+            value={brixiaScore}
+            onChange={this.handleChangeInputBrixiaScore}
           />
-
-          <Label>Content: </Label>
-          <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
 
           <Button onClick={this.confirmUpdateItem}>Update Item</Button>
           <CancelButton href={'/items'}>Cancel</CancelButton>

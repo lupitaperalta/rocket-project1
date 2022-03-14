@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import 'react-table-6/react-table.css';
 
+
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
@@ -84,48 +85,47 @@ class ItemsList extends Component {
         },
       },
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Exam ID',
+        accessor: 'examName',
         filterable: true,
         Cell: props => {
-          return <span data-name={props.original.name}>{props.value}</span>;
+          return <span data-examName={props.original.examName}>{props.value}</span>;
         },
       },
       {
-        Header: 'Day(s)',
-        accessor: 'daysOfWeek',
-        filterable: true,
+        Header: 'Patient ID',
+        accessor: 'patientName',
         Cell: props => {
-          const { daysOfWeek } = props.original;
-          let daysToDisplay = '';
-          if (daysOfWeek && typeof daysOfWeek === 'object') {
-            for (const day in daysOfWeek) {
-              daysToDisplay =
-                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-            }
-          }
-          return (
-            <span
-              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-              data-daysofweek-by-id={props.original._id}>
-              {daysToDisplay || '-'}
-            </span>
-          );
+          return <span data-patientName={props.original.patientName}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Timeframe',
-        accessor: 'timeframeNote',
+        Header: 'Image',
+        accessor: 'image',
         Cell: props => {
-          return <span data-timeframe={props.original.timeframeNote}>{props.value || '-'}</span>;
+          return(
+            
+            <img
+            style={{ height: '80px', width: '80px' }}
+            src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}            
+          /> 
+          )
+          //return <span data-image={props.original.image}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Priority',
-        accessor: 'priority',
+        Header: 'Key Findings',
+        accessor: 'keyFindings',
+        Cell: props => {
+          return <span data-keyFindings={props.original.keyFindings}>{props.value || '-'}</span>;
+        },
+      },
+      {
+        Header: 'Brixia Score',
+        accessor: 'brixiaScore',
         filterable: true,
         Cell: props => {
-          return <span data-priority={props.original.priority}>{props.value}</span>;
+          return <span data-brixiaScore={props.original.brixiaScore}>{props.value}</span>;
         },
       },
       {
@@ -163,7 +163,7 @@ class ItemsList extends Component {
             minRows={10}
           />
         ) : (
-          `No items to render... :(`
+          `No items to render!!! :(`
         )}
       </Wrapper>
     );

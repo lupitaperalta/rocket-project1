@@ -58,39 +58,39 @@ const Table = ({ columns, data }) => {
   );
 };
 
-class PatientsList extends Component {
+class ExamsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      patients: {},
+      exams: {},
     };
   }
 
   componentDidMount() {
-    console.log('PatientList: props');
+    console.log('ExamList: props');
     console.log(this.props);
 
-    this.fetchAllPatients();
+    this.fetchAllExams();
   }
 
-  fetchAllPatients = () => {
+  fetchAllExams = () => {
     //api
       //.getAllPatients()
-    axios.get('http://localhost:3000/patients/patient')
-      .then(resp => {
-        const { patients } = resp.data;
-        console.log('getAllPatients: resp');
-        console.log(patients);
-        this.setState({ patients });
+    axios.get('http://localhost:3000/exams/exams')
+        .then(resp => {
+            const { exams } = resp.data;
+            console.log('getAllExams: resp');
+            console.log(exams);
+            this.setState({ exams });
       })
       .catch(err => {
-        console.error(`ERROR in 'getAllPatients': ${err}`);
+        console.error(`ERROR in 'getAllExams': ${err}`);
         console.error(err);
         return err;
       });
   };
 
-  deleteSinglePatient = itemId => {
+  deleteSingleExam = itemId => {
     return api
       .deleteItemById(itemId)
       .then(resp => {
@@ -105,21 +105,21 @@ class PatientsList extends Component {
       });
   };
 
-  handleRemovePatients = data => {
+  handleRemoveExams = data => {
     const itemId = data;
 
     //this.deleteSinglePatient(itemId)
-    axios.delete(`http://localhost:3000/patients/patient/${itemId}`)
+    axios.delete(`http://localhost:3000/exams/exam/${itemId}`)
     .then(resp => {
-        console.log('handleRemovePatient: resp');
+        console.log('handleRemoveExam: resp');
         console.log(resp);
-        this.fetchAllPatients();
+        this.fetchAllExams();
     });
   };
 
   render() {
-    const patients = this.state.patients || {};
-    console.log(patients);
+    const exams = this.state.exams || {};
+    console.log(exams);
 
     const columns = [
       {
@@ -129,60 +129,52 @@ class PatientsList extends Component {
         Cell: props => {
           console.log(props);
           const { original } = props.cell.row;
-          return <span data-patient-id={original._id}>{props.value}</span>;
+          return <span data-exam-id={original._id}>{props.value}</span>;
+        },
+      },
+      {
+        Header: 'Exam ID',
+        accessor: 'exam_id',
+        // filterable: true,
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-exam_id={original.exam_id}>{props.value}</span>;
         },
       },
       {
         Header: 'Patient ID',
-        accessor: 'patientId',
+        accessor: 'patient_id',
+        // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return (
-            <Link
-              to={{ pathname: '/items', state: { patient_Id: props.value} }}>
-              <span data-name={original.name}>{props.value}</span>
-            </Link>
-        // filterable: true,
-        //Cell: props => {
-         // const { original } = props.cell.row;
-          //return <span data-patientId={original.patientId}>{props.value}</span>;
-          );
+          return <span data-patient_id={original.patient_id}>{props.value}</span>;
         },
       },
 
       {
-        Header: 'Age',
-        accessor: 'age',
+        Header: 'Image',
+        accessor: 'image',
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-age={original.age}>{props.value || '-'}</span>;
+          return <span data-image={original.image}>{props.value || '-'}</span>;
         },
       },
       {
-        Header: 'Sex',
-        accessor: 'sex',
+        Header: 'Key Findings',
+        accessor: 'key_findings',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-sex={original.sex}>{props.value}</span>;
+          return <span data-key_findings={original.key_findings}>{props.value}</span>;
         },
       },
       {
-        Header: 'Race',
-        accessor: 'race',
+        Header: 'Brixia Score',
+        accessor: 'brexia_score',
         // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-race={original.race}>{props.value}</span>;
-        },
-      },
-      {
-        Header: 'Zip Code',
-        accessor: 'zip',
-        // filterable: true,
-        Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-zip={original.zip}>{props.value}</span>;
+          return <span data-brexia_score={original.brexia_score}>{props.value}</span>;
         },
       },
       {
@@ -192,7 +184,7 @@ class PatientsList extends Component {
           const { original } = props.cell.row;
 
           return (
-            <Link data-update-id={original._id} to={`/patient/update/${original._id}`}>
+            <Link data-update-id={original._id} to={`/exam/update/${original._id}`}>
               Update
             </Link>
           );
@@ -205,7 +197,7 @@ class PatientsList extends Component {
           const { original } = props.cell.row;
           return (
             <span data-delete-id={original._id}>
-              <DeleteButton id={original._id} onDelete={this.handleRemovePatients} />
+              <DeleteButton id={original._id} onDelete={this.handleRemoveExams} />
             </span>
           );
         },
@@ -215,14 +207,14 @@ class PatientsList extends Component {
     return (
       <Wrapper>
         <CssBaseline />
-        {(patients || []).length > 0 ? (
-          <Table data={patients} columns={columns} />
+        {(exams || []).length > 0 ? (
+          <Table data={exams} columns={columns} />
         ) : (
-          `No patients to render... :(`
+          `No Exams to render... :(`
         )}
       </Wrapper>
     );
   }
 }
 
-export default PatientsList;
+export default ExamsList;
