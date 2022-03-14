@@ -138,13 +138,9 @@ class ItemsPlain extends Component {
           ? items.map(item => (
               <ItemContainer key={item._id}>
                 <ItemImage src={generateRandomCat()}></ItemImage>
-				<NameHeader>{item.examName}</NameHeader>
+                <NameHeader>{item.name}</NameHeader>
                 <DetailParagraph>ID: {item._id}</DetailParagraph>
-				<DetailParagraph>Exam ID: {item.examName}</DetailParagraph>
-                <DetailParagraph>Patient ID: {item.patientName}</DetailParagraph>
-                <DetailParagraph>Patient ID: {item.patientName}</DetailParagraph>
-                <DetailParagraph>Key Findings: {item.keyFindings}</DetailParagraph>
-                <DetailParagraph>Brixia Score: {item.brixiaScore}</DetailParagraph>
+                <DetailParagraph>Priority: {item.priority}</DetailParagraph>
                 <ButtonsWrapper>
                   <Link data-update-id={item._id} to={`/item/update/${item._id}`}>
                     Update Item

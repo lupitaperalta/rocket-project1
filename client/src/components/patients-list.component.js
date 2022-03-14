@@ -135,18 +135,10 @@ class PatientsList extends Component {
       {
         Header: 'Patient ID',
         accessor: 'patientId',
+        // filterable: true,
         Cell: props => {
           const { original } = props.cell.row;
-          return (
-            <Link
-              to={{ pathname: '/items', state: { patient_Id: props.value} }}>
-              <span data-name={original.name}>{props.value}</span>
-            </Link>
-        // filterable: true,
-        //Cell: props => {
-         // const { original } = props.cell.row;
-          //return <span data-patientId={original.patientId}>{props.value}</span>;
-          );
+          return <span data-patientId={original.patientId}>{props.value}</span>;
         },
       },
 

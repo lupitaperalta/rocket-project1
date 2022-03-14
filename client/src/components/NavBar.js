@@ -23,12 +23,12 @@ const Nav = styled.nav.attrs({
 
 const navBarItems = [
   {
-    name: 'Exams',
+    name: 'Items',
     toPathname: '/items',
     className: 'nav-link',
   },
   {
-    name: 'Create Exam',
+    name: 'Create Item',
     toPathname: '/item/create',
     className: 'nav-link',
   },
@@ -41,7 +41,7 @@ const navBarItems = [
     name: 'Patients List',
     toPathname: '/patients',
     className: 'nav-link',
-  },
+  }
 ];
 
 class NavBar extends Component {

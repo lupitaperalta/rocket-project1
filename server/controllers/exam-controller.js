@@ -128,8 +128,8 @@ updateItem = async (req, res) => {
 
   const itemForUpdate = {
     _id: req.params.id,
-    //exam_id: body.exam_id,
-    //patient_id: body.patient_id,
+    exam_id: body.exam_id,
+    patient_id: body.patient_id,
     image: body.image,
     key_findings: body.key_findings,
     brexia_score: body.brexia_score,

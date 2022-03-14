@@ -84,47 +84,48 @@ class ItemsList extends Component {
         },
       },
       {
-        Header: 'Exam ID',
-        accessor: 'examName',
+        Header: 'Name',
+        accessor: 'name',
         filterable: true,
         Cell: props => {
-			return <span data-examName={props.original.examName}>{props.value}</span>;
+          return <span data-name={props.original.name}>{props.value}</span>;
         },
       },
       {
-        Header: 'Patient ID',
-        accessor: 'patientName',
-        Cell: props => {
-          return <span data-patientName={props.original.patientName}>{props.value || '-'}</span>;
-        },
-      },
-      {
-        Header: 'Image',
-        accessor: 'image',
-        Cell: props => {
-			return(
-            
-				<img
-				style={{ height: '80px', width: '80px' }}
-				src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}            
-			  /> 
-			  )
-			  //return <span data-image={props.original.image}>{props.value || '-'}</span>;
-        },
-      },
-      {
-		Header: 'Key Findings',
-        accessor: 'keyFindings',
-        Cell: props => {
-			return <span data-keyFindings={props.original.keyFindings}>{props.value || '-'}</span>;
-        },
-      },
-      {
-        Header: 'Brixia Score',
-        accessor: 'brixiaScore',
+        Header: 'Day(s)',
+        accessor: 'daysOfWeek',
         filterable: true,
         Cell: props => {
-          return <span data-brixiaScore={props.original.brixiaScore}>{props.value}</span>;
+          const { daysOfWeek } = props.original;
+          let daysToDisplay = '';
+          if (daysOfWeek && typeof daysOfWeek === 'object') {
+            for (const day in daysOfWeek) {
+              daysToDisplay =
+                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
+            }
+          }
+          return (
+            <span
+              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
+              data-daysofweek-by-id={props.original._id}>
+              {daysToDisplay || '-'}
+            </span>
+          );
+        },
+      },
+      {
+        Header: 'Timeframe',
+        accessor: 'timeframeNote',
+        Cell: props => {
+          return <span data-timeframe={props.original.timeframeNote}>{props.value || '-'}</span>;
+        },
+      },
+      {
+        Header: 'Priority',
+        accessor: 'priority',
+        filterable: true,
+        Cell: props => {
+          return <span data-priority={props.original.priority}>{props.value}</span>;
         },
       },
       {
@@ -162,7 +163,7 @@ class ItemsList extends Component {
             minRows={10}
           />
         ) : (
-          `No items to render!!! :(`
+          `No items to render... :(`
         )}
       </Wrapper>
     );
