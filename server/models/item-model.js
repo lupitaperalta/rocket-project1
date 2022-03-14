@@ -3,20 +3,23 @@ const Schema = mongoose.Schema;
 
 const Item = new Schema(
     {
-        name: {
+        examName: {
             type: String,
             required: true
         },
-        daysOfWeek: {
-            type: Map,
-            of: String,
-            required: false
+        patientName: {
+            type: String,
+            required: true
         },
-        timeframeNote: {
+        image: {
+            type: String,
+            required: true
+        },
+		keyFindings: {
             type: String,
             required: false
         },
-        priority: {
+        brixiaScore: {
             type: Number,
             required: false
         },

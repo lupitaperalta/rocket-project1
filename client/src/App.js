@@ -17,6 +17,8 @@ import { ItemInsert, Items, ItemUpdate} from './pages';
 
 import CreatePatient from './components/create-patient.component';
 import PatientsList from './components/patients-list.component';
+import CreateExams from './components/create-exam.component';
+import ExamsList from './components/exams-list.component';
 
 class App extends Component {
   render() {
@@ -34,6 +36,8 @@ class App extends Component {
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
         <Route path= '/patient' component={CreatePatient} />
         <Route path= '/patients' component={PatientsList} />
+		<Route path= '/exam' component={CreateExams} />
+        <Route path= '/exams' component={ExamsList} />
       </Switch>
     );
 

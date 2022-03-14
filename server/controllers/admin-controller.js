@@ -1,5 +1,5 @@
 /* eslint-disable no-undef, arrow-body-style */
-const Item = require('../models/item-model');
+const Item = require('../models/item-model'); // Make this go to admin model
 
 getItems = async (req, res) => {
   await Item.find({}, (err, items) => {
@@ -127,11 +127,11 @@ updateItem = async (req, res) => {
 
   const itemForUpdate = {
     _id: req.params.id,
-    examName: body.examName,
-    patientName: body.patientName,
+    //exam_id: body.exam_id,
+    //patient_id: body.patient_id,
     image: body.image,
-    keyFindings: body.keyFindings,
-    brixiaScore: body.brixiaScore,
+    key_findings: body.key_findings,
+    brexia_score: body.brexia_score,
   };
 
   // console.log('----------------------- updateItem: res -----------------------');
